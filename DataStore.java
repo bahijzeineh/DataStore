@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-public abstract class DataStore
+public abstract class DataStore<T extends DataStoreItem>
 {
 	protected String name, dataFile;
-	protected ArrayList<DataStoreItem> data;
+	protected ArrayList<T> data;
 	protected ArrayList<Observer> observers;
 		
 	//name is used for message logging
@@ -16,7 +16,7 @@ public abstract class DataStore
 	{
 		this.name=name;
 		this.dataFile=dataFile;
-		data=new ArrayList<DataStoreItem>();
+		data=new ArrayList<T>();
 		observers=new ArrayList<Observer>();
 		loadFromFile();
 	}
@@ -28,7 +28,7 @@ public abstract class DataStore
 		{
 			sc=new Scanner(new File(dataFile));
 		}
-		catch(FileNotFoundException e)
+		catch(Exception e)
 		{
 			System.err.print(e.getMessage());
 		}
@@ -60,7 +60,7 @@ public abstract class DataStore
 		{
 			pw=new PrintWriter(new File(dataFile));
 		}
-		catch(FileNotFoundException e)
+		catch(Exception e)
 		{
 			System.err.print(e.getMessage());
 		}
@@ -79,14 +79,14 @@ public abstract class DataStore
 	}
 	
 	//find, add, update, delete functions
-	public DataStoreItem find(String id)
+	public T find(String id)
 	{
 		for(int i=0;i<data.size();++i)
 			if(data.get(i).getID().equals(id))
 				return data.get(i);
 		return null;
 	}
-	public void add(DataStoreItem item) throws DuplicateIDException
+	public void add(T item) throws DuplicateIDException
 	{
 		if(find(item.getID())!=null)
 		{
@@ -96,7 +96,7 @@ public abstract class DataStore
 		data.add(item);
 		notifyObserversOfAdd(item);
 	}
-	public void update(DataStoreItem item) throws ItemNotFoundException
+	public void update(T item) throws ItemNotFoundException
 	{
 		DataStoreItem target=find(item.getID());
 		if(target==null)
@@ -107,13 +107,13 @@ public abstract class DataStore
 		target=item;
 		notifyObserversOfUpdate(item);
 	}
-	public void delete(DataStoreItem item) throws ItemNotFoundException
+	public void delete(T item) throws ItemNotFoundException
 	{
 		delete(item.getID());
 	}
 	public void delete(String id) throws ItemNotFoundException
 	{
-		DataStoreItem target=find(id);
+		T target=find(id);
 		if(target==null)
 		{
 			String err="error: could not find item with id "+id+" in "+name;
@@ -154,7 +154,7 @@ public abstract class DataStore
 	}
 	
 	//to be implemented to convert a one line data string into the appropriate derived DataStoreItem
-	protected abstract DataStoreItem parse(String line);
+	protected abstract T parse(String line);
 	
 	//for debugging
 	public void printData()
