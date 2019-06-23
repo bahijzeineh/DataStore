@@ -1,6 +1,6 @@
 package DataStore;
 
-public interface IObserver
+public interface IDataStoreObserver
 {
 	public String getID();
 	public void onAdd(DataStoreItem item);

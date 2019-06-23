@@ -6,14 +6,14 @@ public abstract class DataStore<T extends DataStoreItem> implements IDataStoreAc
 {
 	protected String name;
 	protected ArrayList<T> data;
-	protected ArrayList<IObserver> observers;
+	protected ArrayList<IDataStoreObserver> observers;
 		
 	//name is used for message logging
 	public DataStore(String name)
 	{
 		this.name=name;
 		data=new ArrayList<T>();
-        observers=new ArrayList<IObserver>();
+        observers=new ArrayList<IDataStoreObserver>();
 	}
 	
 	public abstract void load();//shouldn't need to call this directly as its done in constructor
@@ -71,11 +71,11 @@ public abstract class DataStore<T extends DataStoreItem> implements IDataStoreAc
 	}	
 	
 	//observer stuff
-	public void registerObserver(IObserver o)
+	public void registerObserver(IDataStoreObserver o)
 	{
 		observers.add(o);
 	}
-	public void removeObserver(IObserver o)
+	public void removeObserver(IDataStoreObserver o)
 	{
 		for(int i=0;i<observers.size();++i)
 			if(observers.get(i).getID().equals(o.getID()))
