@@ -1,28 +1,26 @@
 package DataStore;
 
-
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-public abstract class FileDataStore<T extends DataStoreItem> extends DataStore
+public abstract class FileDataStore<T extends DataStoreItem> extends DataStore<T>
 {
-	protected String dataFile;
+	protected String dataFileName;
 		
 	//name is used for message logging
-	public FileDataStore(String name, String dataFile)
+	public FileDataStore(String name, String dataFileName)
 	{
 		super(name);
-		this.dataFile=dataFile;
+		this.dataFileName=dataFileName;
 		load();
 	}
 	
-	protected void load()//shouldn't need to call this directly as its done in constructor
+	public void load()//shouldn't need to call this directly as its done in constructor
 	{
 		Scanner sc=null;
 		try
 		{
-			sc=new Scanner(new File(dataFile));
+			sc=new Scanner(new File(dataFileName));
 		}
 		catch(Exception e)
 		{
@@ -49,12 +47,12 @@ public abstract class FileDataStore<T extends DataStoreItem> extends DataStore
 			sc.close();
 		}
 	}
-	protected void save()//called in close() so shouldn't need to call directly
+	public void save()//called in close() so shouldn't need to call directly
 	{
 		PrintWriter pw=null;
 		try
 		{
-			pw=new PrintWriter(new File(dataFile));
+			pw=new PrintWriter(new File(dataFileName));
 		}
 		catch(Exception e)
 		{

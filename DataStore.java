@@ -1,11 +1,8 @@
 package DataStore;
 
-
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.*;
 
-public abstract class DataStore<T extends DataStoreItem>
+public abstract class DataStore<T extends DataStoreItem> implements IDataStoreActions<T>
 {
 	protected String name;
 	protected ArrayList<T> data;
@@ -19,8 +16,8 @@ public abstract class DataStore<T extends DataStoreItem>
         observers=new ArrayList<Observer>();
 	}
 	
-	protected abstract void load();//shouldn't need to call this directly as its done in constructor
-	protected abstract void save();//called in close() so shouldn't need to call directly
+	public abstract void load();//shouldn't need to call this directly as its done in constructor
+	public abstract void save();//called in close() so shouldn't need to call directly
 	//called by centralDataStore.closeDataStores so shouldnt need to call directly
 	protected void close()
 	{
