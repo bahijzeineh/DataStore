@@ -6,16 +6,16 @@ import java.util.Map;
 public class CentralDataStore 
 {
 	@SuppressWarnings("rawtypes")
-	static Map<String,DataStore> dataStores=null;
+	private static Map<String,DataStore> dataStores=null;
 	
-	static void addDataStore(@SuppressWarnings("rawtypes") DataStore ds)
+	public static void addDataStore(@SuppressWarnings("rawtypes") DataStore ds)
 	{
 		if(dataStores==null)
 			dataStores=new HashMap<>();
 		dataStores.put(ds.name, ds);
 	}
 	@SuppressWarnings("rawtypes")
-	static DataStore get(String name)
+	public static DataStore get(String name)
 	{
 		if(dataStores==null)
 			return null;
@@ -23,7 +23,7 @@ public class CentralDataStore
 			return dataStores.get(name);
 	}
 	@SuppressWarnings("rawtypes")
-	static void closeDataStores()
+	public static void closeDataStores()
 	{
 		if(dataStores!=null)
 		{
