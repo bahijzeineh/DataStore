@@ -14,11 +14,12 @@ public abstract class DataStore<T extends DataStoreItem, ParseParam> implements 
 		this.name=name;
 		data=new ArrayList<T>();
         observers=new ArrayList<IDataStoreObserver>();
+        CentralDataStore.addDataStore(this);
 	}
 	
 	public abstract void load();//shouldn't need to call this directly as its done in constructor
 	public abstract void save();//called in close() so shouldn't need to call directly
-	//called by centralDataStore.closeDataStores so shouldnt need to call directly
+	
 	protected void close()
 	{
 		save();
