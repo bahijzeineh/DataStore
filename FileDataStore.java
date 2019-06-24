@@ -3,7 +3,7 @@ package DataStore;
 import java.util.Scanner;
 import java.io.*;
 
-public abstract class FileDataStore<T extends DataStoreItem> extends DataStore<T>
+public abstract class FileDataStore<T extends DataStoreItem> extends DataStore<T,String>
 {
 	protected String dataFileName;
 		

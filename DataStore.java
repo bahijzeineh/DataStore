@@ -2,7 +2,7 @@ package DataStore;
 
 import java.util.ArrayList;
 
-public abstract class DataStore<T extends DataStoreItem> implements IDataStoreActions<T>
+public abstract class DataStore<T extends DataStoreItem, ParseParam> implements IDataStoreActions<T>
 {
 	protected String name;
 	protected ArrayList<T> data;
@@ -101,7 +101,7 @@ public abstract class DataStore<T extends DataStoreItem> implements IDataStoreAc
 	}
 	
 	//to be implemented to convert a one line data string into the appropriate derived DataStoreItem
-	protected abstract T parse(String line);
+	protected abstract T parse(ParseParam data);
 	
 	//for debugging
 	public void printData()

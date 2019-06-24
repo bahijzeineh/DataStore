@@ -30,7 +30,13 @@ public abstract class DataStoreItem
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		return sdf.format(date);
 	}
-	
+	public static String makeString(String[] data,String delim)
+	{
+		String out="";
+		for(int i=0;i<data.length;++i)
+			out+=data[i]+(i!=data.length-1?delim:"");
+		return out;
+	}
 	public abstract String toString();
 
 	@Override
