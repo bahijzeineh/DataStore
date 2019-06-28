@@ -24,7 +24,7 @@ public abstract class FileDataStore<T extends DataStoreItem> extends DataStore<T
 		}
 		catch(Exception e)
 		{
-			System.err.print(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 		if(sc!=null)
 		{

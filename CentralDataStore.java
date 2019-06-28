@@ -3,6 +3,10 @@ package DataStore;
 import java.util.HashMap;
 import java.util.Map;
 
+//this centralised data store assumes there will be only one instance of each DataStore
+//in the system. if this is not desired then do not use this class as only the first
+//instantiation of each DataStore will be present here unless one manually registers
+//a later instance with the override flag set to true.
 public class CentralDataStore 
 {
 	@SuppressWarnings("rawtypes")
