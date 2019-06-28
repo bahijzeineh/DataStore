@@ -29,13 +29,13 @@ public class CentralDataStore
 		}
 		return false;
 	}
-	@SuppressWarnings({ "rawtypes" })
-	public static DataStore get(Class<? extends DataStore> cls)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static <T extends DataStore> T get(Class<? extends DataStore> cls)
 	{
 		if(dataStores==null)
 			return null;
 		else
-			return (DataStore)dataStores.get(cls);
+			return (T)dataStores.get(cls);
 	}
 	@SuppressWarnings("rawtypes")
 	public static void closeDataStores()
