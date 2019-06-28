@@ -101,7 +101,7 @@ public abstract class DataStore<T extends DataStoreItem, ParseParam> implements 
 			observers.get(i).onDelete(item);
 	}
 	
-	//to be implemented to convert a one line data string into the appropriate derived DataStoreItem
+	//to be implemented to convert data into the appropriate derived DataStoreItem
 	protected abstract T parse(ParseParam data);
 	
 	//for debugging
