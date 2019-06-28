@@ -6,14 +6,14 @@ public abstract class DataStore<T extends DataStoreItem, ParseParam> implements 
 {
 	protected String name;
 	protected ArrayList<T> data;
-	protected ArrayList<IDataStoreObserver> observers;
+	protected ArrayList<IDataStoreObserver<T>> observers;
 		
 	//name is used for message logging
 	public DataStore(String name)
 	{
 		this.name=name;
 		data=new ArrayList<T>();
-        observers=new ArrayList<IDataStoreObserver>();
+        observers=new ArrayList<IDataStoreObserver<T>>();
         CentralDataStore.addDataStore(this);
 	}
 	
@@ -72,11 +72,11 @@ public abstract class DataStore<T extends DataStoreItem, ParseParam> implements 
 	}	
 	
 	//observer stuff
-	public void registerObserver(IDataStoreObserver o)
+	public void registerObserver(IDataStoreObserver<T> o)
 	{
 		observers.add(o);
 	}
-	public void removeObserver(IDataStoreObserver o)
+	public void removeObserver(IDataStoreObserver<T> o)
 	{
 		for(int i=0;i<observers.size();++i)
 			if(observers.get(i).getID().equals(o.getID()))
@@ -85,17 +85,17 @@ public abstract class DataStore<T extends DataStoreItem, ParseParam> implements 
 				return;
 			}
 	}
-	protected void notifyObserversOfAdd(DataStoreItem item)
+	protected void notifyObserversOfAdd(T item)
 	{
 		for(int i=0;i<observers.size();++i)
 			observers.get(i).onAdd(item);
 	}
-	protected void notifyObserversOfUpdate(DataStoreItem item)
+	protected void notifyObserversOfUpdate(T item)
 	{
 		for(int i=0;i<observers.size();++i)
 			observers.get(i).onUpdate(item);
 	}
-	protected void notifyObserversOfDelete(DataStoreItem item)
+	protected void notifyObserversOfDelete(T item)
 	{
 		for(int i=0;i<observers.size();++i)
 			observers.get(i).onDelete(item);

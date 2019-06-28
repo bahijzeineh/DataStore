@@ -1,9 +1,9 @@
 package DataStore;
 
-public interface IDataStoreObserver
+public interface IDataStoreObserver<T extends DataStoreItem>
 {
 	public String getID();
-	public void onAdd(DataStoreItem item);
-	public void onUpdate(DataStoreItem item);
-	public void onDelete(DataStoreItem item);
+	public void onAdd(T item);
+	public void onUpdate(T item);
+	public void onDelete(T item);
 }
