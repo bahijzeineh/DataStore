@@ -8,25 +8,30 @@ public class CentralDataStore
 	@SuppressWarnings("rawtypes")
 	private static Map<Class<? extends DataStore>,DataStore> dataStores=null;
 	
-	public static void addDataStore(@SuppressWarnings("rawtypes") DataStore ds)
+	public static boolean registerDataStore(@SuppressWarnings("rawtypes") DataStore ds)
+	{
+		return registerDataStore(ds,false);
+	}
+	public static boolean registerDataStore(@SuppressWarnings("rawtypes") DataStore ds, boolean override)
 	{
 		if(dataStores==null)
 			dataStores=new HashMap<>();
-		dataStores.put(ds.getClass(), ds);
-		System.out.println("added dataStore: "+ds.getClass().getName());
+
+		if(override || !dataStores.containsKey(ds.getClass()))
+		{
+			dataStores.put(ds.getClass(), ds);
+			System.out.println("registered dataStore: "+ds.getClass().getName());
+			return true;
+		}
+		return false;
 	}
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static <T extends DataStore> T get(Class<? extends DataStore> cls)
+	@SuppressWarnings({ "rawtypes" })
+	public static DataStore get(Class<? extends DataStore> cls)
 	{
 		if(dataStores==null)
 			return null;
 		else
-		{
-			Object ds=dataStores.get(cls);
-			if(ds!=null)
-				return (T) ds.getClass().cast(ds);
-		}
-		return null;
+			return (DataStore)dataStores.get(cls);
 	}
 	@SuppressWarnings("rawtypes")
 	public static void closeDataStores()

@@ -14,7 +14,7 @@ public abstract class DataStore<T extends DataStoreItem, ParseParam> implements 
 		this.name=name;
 		data=new ArrayList<T>();
         observers=new ArrayList<IDataStoreObserver<T>>();
-        CentralDataStore.addDataStore(this);
+        CentralDataStore.registerDataStore(this);
 	}
 	
 	public abstract void load();//shouldn't need to call this directly as its done in constructor
